@@ -1,9 +1,23 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: maxsi
+  Date: 1/22/25
+  Time: 1:57 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: maxsi
+  Date: 1/22/25
+  Time: 1:45 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login Form</title>
+    <title>Transaction Options</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,46 +38,26 @@
         }
         .form-group {
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            flex-direction: column; /* Stack items vertically */
+            align-items: flex-start; /* Align items to the start */
         }
         label {
-            padding-right: 5px;
             margin-bottom: 5px;
         }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            height: 20px;
-            margin: 15px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button[type="submit"] {
+        button {
             width: 100%;
             height: 35px;
+            margin: 10px 0; /* Spacing between buttons */
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        button[type="submit"]:hover {
+        button:hover {
             background-color: #0056b3;
         }
-        .register-link {
-            text-align: center;
-            margin-top: 5px;
-        }
-        .register-link a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .register-link a:hover {
-            color: #0056b3;
-        }
         .error-message {
-
             color: red;
             padding: 10px;
             margin: 10px 0;
@@ -86,41 +80,37 @@
 <body>
 <div class="form-container">
     <!-- Display error message if it exists -->
-    <%-- Add this near the top of your form --%>
-        <%
-            String errorMessage = (String) request.getAttribute("error");
-            if (errorMessage != null) {
-        %>
+    <%
+        String errorMessage = (String) request.getAttribute("error");
+        if (errorMessage != null) {
+    %>
     <div class="error-container">
         <div class="error-message">
             <%= errorMessage %> <!-- Using scriptlet to display the error message -->
         </div>
     </div>
-        <%
-            }
-        %>
+    <%
+        }
+    %>
 
-    <form action="login" method="POST">
-        <h2 style="margin-bottom: 10px; text-align: center;"> User Login </h2>
-
-        <div class="form-group">
-            <label for="username">User Name:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
+    <form action="fixAccount" method="POST">
+        <h2 style="margin-bottom: 10px; text-align: center;"> Transaction Options </h2>
 
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
+            <label>Select an operation:</label>
 
-        <button type="submit">Login</button>
+            <button type="submit" name="operation" value="transaction">Transaction Operation</button>
 
-        <div class="register-link">
-            <p style="margin-top: 5px;">Not a user? <a href="register.jsp">Register here</a></p>
+            <button type="submit" name="operation" value="balanceInquiry">Balance Inquiry</button>
+
+            <button type="submit" name="operation" value="fixedBalance">Fixed Deposit Details</button>
+
+
         </div>
     </form>
 </div>
 
 </body>
 </html>
+
 

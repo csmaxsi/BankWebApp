@@ -65,39 +65,73 @@
         .login-link a:hover {
             color: #0056b3;
         }
+        .error-message {
+
+             color: red;
+             padding: 10px;
+             margin: 10px 0;
+             border: 1px solid red;
+             background-color: #ffe6e6;
+        }
+        .error-container {
+            text-align: center; /* Center the content */
+            margin-bottom: 20px; /* Space between error message and form */
+        }
+        .form-container {
+            display: flex; /* Use flexbox for alignment */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center items vertically */
+            align-items: center; /* Center items horizontally */
+            min-height: 100vh; /* Minimum height of 100% of the viewport height */
+        }
     </style>
 </head>
 <body>
+    <div class="form-container">
+        <!-- Display error message if it exists -->
+        <%-- Add this near the top of your form --%>
+        <%
+            String errorMessage = (String) request.getAttribute("error");
+            if (errorMessage != null) {
+        %>
+        <div class="error-container">
+            <div class="error-message">
+                <%= errorMessage %> <!-- Using scriptlet to display the error message -->
+            </div>
+        </div>
+        <%
+            }
+        %>
 
-<form action="register" method="post">
-    <h2 style="margin-bottom: 10px; text-align: center; "> User Registration </h2>
+        <form action="register" method="POST">
+            <h2 style="margin-bottom: 10px; text-align: center; "> User Registration </h2>
 
-    <div class="form-group">
-        <label for="userName">User Name:</label>
-        <input type="text" id="userName" name="User-name" placeholder="Enter Username" />
+            <div class="form-group">
+                <label for="username">User Name:</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter Password" />
+            </div>
+
+            <div class="form-group">
+                <label for="confPassword">Confirm Password:</label>
+                <input type="password" id="confPassword" name="confPass" required placeholder="Confirm Password" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter Email" />
+            </div>
+
+            <button type="submit">Register</button>
+
+            <div class="login-link">
+                <p style="margin-top: 5px;">Already a user? <a href="login.jsp">Login here</a></p>
+            </div>
+        </form>
     </div>
-
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required placeholder="Enter Password" />
-    </div>
-
-    <div class="form-group">
-    <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm Password" />
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required placeholder="Enter Email" />
-    </div>
-
-    <button type="submit">Register</button>
-
-    <div class="login-link">
-        <p style="margin-top: 5px;">Already a user? <a href="login.jsp">Login here</a></p>
-    </div>
-</form>
-
 </body>
 </html>
