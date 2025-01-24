@@ -101,12 +101,12 @@
     %>
 
     <form action="loaAccount" method="POST">
-        <h2 style="margin-bottom: 10px; text-align: center;"> Transaction Options </h2>
+        <h2 style="margin-bottom: 10px; text-align: center;"> Loan Account </h2>
 
         <div class="form-group">
             <label>Select an operation:</label>
 
-            <button type="submit" name="operation" value="transaction">Transaction Operation</button>
+            <button type="submit" name="operation" value="transaction">Transaction Operations</button>
 
             <button type="submit" name="operation" value="balanceInquiry">Balance Inquiry</button>
 

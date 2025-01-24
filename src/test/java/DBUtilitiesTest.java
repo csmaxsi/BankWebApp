@@ -1,5 +1,7 @@
 package com.bank;
 
+import com.bank.util.DBUtilities;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 

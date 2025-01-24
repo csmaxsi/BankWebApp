@@ -1,4 +1,4 @@
-package com.bank;
+package com.bank.model;
 
 public class User {
     private String username;

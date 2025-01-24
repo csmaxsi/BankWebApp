@@ -1,9 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: maxsi
+  Date: 1/23/25
+  Time: 12:27 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login Form</title>
+    <title>Transactions Operation Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,13 +32,16 @@
         .form-group {
             display: flex;
             flex-direction: row;
+            justify-content: center;
             align-items: center;
         }
         label {
-            padding-right: 5px;
+            width: 100px;
+            padding-right: 10px;
+            text-align: start;
             margin-bottom: 5px;
         }
-        input[type="text"], input[type="password"] {
+        select, input[type="text"], input[type="number"] {
             width: 100%;
             height: 20px;
             margin: 15px;
@@ -51,19 +61,7 @@
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
-        .register-link {
-            text-align: center;
-            margin-top: 5px;
-        }
-        .register-link a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .register-link a:hover {
-            color: #0056b3;
-        }
         .error-message {
-
             color: red;
             padding: 10px;
             margin: 10px 0;
@@ -73,6 +71,18 @@
         .error-container {
             text-align: center; /* Center the content */
             margin-bottom: 20px; /* Space between error message and form */
+        }
+        .success-message {
+            color: black;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ffb700;
+            background-color: #ffb700;
+        }
+        .success-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #ffb700;
         }
         .form-container {
             display: flex; /* Use flexbox for alignment */
@@ -86,40 +96,56 @@
 <body>
 <div class="form-container">
 
-        <%
-            String errorMessage = (String) request.getAttribute("error");
-            if (errorMessage != null) {
-        %>
-    <div class="error-container">
-        <div class="error-message">
-            <%= errorMessage %>
-        </div>
+<%
+    String errorMessage = (String) request.getAttribute("error");
+    if (errorMessage != null) {
+%>
+<div class="error-container">
+    <div class="error-message">
+        <%= errorMessage %>
     </div>
-        <%
-            }
-        %>
+</div>
+<%
+    }
+%>
 
-    <form action="login" method="POST">
-        <h2 style="margin-bottom: 10px; text-align: center;"> User Login </h2>
+<%
+    String successMessage = (String) request.getAttribute("success");
+    if (successMessage != null) {
+%>
+<div class="success-container">
+    <div class="success-message">
+        <%= successMessage %>
+    </div>
+</div>
+<%
+    }
+%>
+    <form action="transaction" method="POST">
+        <h2 style="margin-bottom: 10px; text-align: center;"> Transaction Operations </h2>
 
         <div class="form-group">
-            <label for="username">User Name:</label>
-            <input type="text" id="username" name="username" required>
+            <label for="accountId">Account Number :</label>
+            <input type="text" id="accountId" name="accountId" value="${accountId}" readonly>
         </div>
 
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="transactionType">Transaction Operations:</label>
+            <select id="transactionType" name="transactionType" required>
+                <option value="" disabled selected>Select Transaction Type</option>
+                <option value="Withdraw">Withdraw</option>
+                <option value="Deposit">Deposit</option>
+            </select>
         </div>
 
-        <button type="submit">Login</button>
-
-        <div class="register-link">
-            <p style="margin-top: 5px;">Not a user? <a href="register.jsp">Register here</a></p>
+        <div class="form-group">
+            <label for="amount">Amount :</label>
+            <input type="number" id="amount" name="amount" required placeholder="Enter Amount" step="0.0001"/>
         </div>
+
+        <button type="submit">Create</button>
     </form>
 </div>
-
 </body>
 </html>
 

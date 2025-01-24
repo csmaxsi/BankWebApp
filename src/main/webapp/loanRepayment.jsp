@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: maxsi
-  Date: 1/21/25
-  Time: 11:15 PM
+  Date: 1/24/25
+  Time: 5:12 PM
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account Creation Form</title>
+  <title>Loan Repayment Form</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,16 +32,13 @@
     .form-group {
       display: flex;
       flex-direction: row;
-      justify-content: center;
       align-items: center;
     }
     label {
-      width: 100px;
-      padding-right: 10px;
-      text-align: start;
+      padding-right: 5px;
       margin-bottom: 5px;
     }
-    select, input[type="text"], input[type="number"] {
+    input[type="text"], input[type="password"] {
       width: 100%;
       height: 20px;
       margin: 15px;
@@ -50,6 +47,7 @@
       border-radius: 5px;
     }
     button[type="submit"] {
+      margin: 15px;
       width: 100%;
       height: 35px;
       background-color: #007bff;
@@ -62,6 +60,7 @@
       background-color: #0056b3;
     }
     .error-message {
+
       color: red;
       padding: 10px;
       margin: 10px 0;
@@ -83,7 +82,8 @@
 </head>
 <body>
 <div class="form-container">
-  <%-- Display error message if it exists --%>
+  <!-- Display error message if it exists -->
+  <%-- Add this near the top of your form --%>
   <%
     String errorMessage = (String) request.getAttribute("error");
     if (errorMessage != null) {
@@ -97,27 +97,25 @@
     }
   %>
 
-  <form action="account" method="POST">
-    <h2 style="margin-bottom: 10px; text-align: center;"> Account Creation </h2>
+  <form action="loanRepay" method="POST">
+    <h2 style="margin-bottom: 10px; text-align: center;"> Loan Repayment </h2>
 
     <div class="form-group">
-      <label for="accountType">Account Type:</label>
-      <select id="accountType" name="accountType" required>
-        <option value="" disabled selected>Select Account Type</option>
-        //<option value="create">Create Account</option>
-        <option value="savings">Savings Account</option>
-        <option value="loan">Loans Account</option>
-        <option value="fixed">Fixed Account</option>
-      </select>
+      <label for="accountNumber">Account Number:</label>
+      <input type="text" id="accountNumber" name="accountNumber" required>
     </div>
 
     <div class="form-group">
-      <label for="initialDeposit">Initial Deposit:</label>
-      <input type="number" id="initialDeposit" name="initialDeposit" required placeholder="Enter Amount" step="0.0001"/>
+      <label for="amount">Repay Amount:</label>
+      <input type="number" id="amount" name="amount" step="0.0001" required>
     </div>
 
-    <button type="submit">Create</button>
+    <button type="submit">Submit</button>
+
   </form>
 </div>
+
 </body>
 </html>
+
+

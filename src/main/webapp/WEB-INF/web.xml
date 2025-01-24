@@ -5,27 +5,43 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
-    <servlet-class>com.bank.RegisterServlet</servlet-class>
+    <servlet-class>com.bank.servlet.RegisterServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>com.bank.LoginServlet</servlet-class>
+    <servlet-class>com.bank.servlet.LoginServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>AccountCreate</servlet-name>
-    <servlet-class>com.bank.AccountCreateServlet</servlet-class>
+    <servlet-class>com.bank.servlet.AccountCreateServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>SavingsAccount</servlet-name>
-    <servlet-class>com.bank.SavingsAccountServlet</servlet-class>
+    <servlet-class>com.bank.servlet.SavingsAccountServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>FixedAccount</servlet-name>
-    <servlet-class>com.bank.FixedAccountServlet</servlet-class>
+    <servlet-class>com.bank.servlet.FixedAccountServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>LoanAccount</servlet-name>
-    <servlet-class>com.bank.LoanAccountServlet</servlet-class>
+    <servlet-class>com.bank.servlet.LoanAccountServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Transaction</servlet-name>
+    <servlet-class>com.bank.servlet.TransactionServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BalanceInq</servlet-name>
+    <servlet-class>com.bank.servlet.BalanceInqServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LoanRepay</servlet-name>
+    <servlet-class>com.bank.servlet.LoanRepayServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FixedDepoDetails</servlet-name>
+    <servlet-class>com.bank.servlet.FixedDepoDetailsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
@@ -51,5 +67,22 @@
     <servlet-name>LoanAccount</servlet-name>
     <url-pattern>/loaAccount</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Transaction</servlet-name>
+    <url-pattern>/transaction</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BalanceInq</servlet-name>
+    <url-pattern>/balanceInq</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoanRepay</servlet-name>
+    <url-pattern>/loanRepay</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FixedDepoDetails</servlet-name>
+    <url-pattern>/fixDepoDetails</url-pattern>
+  </servlet-mapping>
+
 <display-name>Archetype Created Web Application</display-name>
 </web-app>

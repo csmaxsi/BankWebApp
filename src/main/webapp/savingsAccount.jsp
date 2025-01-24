@@ -92,7 +92,7 @@
         <div class="form-group">
             <label>Select an operation:</label>
 
-            <button type="submit" name="operation" value="transaction">Transaction Operation</button>
+            <button type="submit" name="operation" value="transaction">Transaction Operations</button>
 
             <button type="submit" name="operation" value="balanceInquiry">Balance Inquiry</button>
 

@@ -1,9 +1,11 @@
-package com.bank;
+package com.bank.servlet;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import com.bank.util.DBUtilities;
+import com.bank.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

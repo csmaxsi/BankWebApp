@@ -1,4 +1,4 @@
-package com.bank;
+package com.bank.servlet;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -7,17 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.regex.Pattern;
 
-public class LoanAccountServlet extends HttpServlet {
+public class LoanRepayServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/loanAccount.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("loanRepayment.jsp");
         dispatcher.forward(request, response);
     }
+
 }

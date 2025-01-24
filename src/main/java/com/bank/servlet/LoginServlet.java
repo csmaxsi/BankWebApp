@@ -1,5 +1,7 @@
-package com.bank;
+package com.bank.servlet;
 
+import com.bank.util.DBUtilities;
+import com.bank.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +17,6 @@ import java.sql.SQLException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doGet");
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
     @Override
@@ -37,10 +38,25 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                //System.out.println("user: " + user.getUserId());
                 session.setAttribute("user_id", user.getUserId()); // Store userId in session
                 session.setMaxInactiveInterval(30*60);
-                response.sendRedirect("accountCreate.jsp");
+                String accountType = checkUserAccount(conn, user.getUserId());
+                if (accountType != null) {
+                    // Redirect based on account type
+                    switch (accountType) {
+                        case "savings":
+                            response.sendRedirect("savAccount");
+                            break;
+                        case "loan":
+                            response.sendRedirect("loaAccount");
+                            break;
+                        case "fixed":
+                            response.sendRedirect("fixAccount");
+                            break;
+                    }
+                } else {
+                    response.sendRedirect("accountCreate.jsp");
+                }
             } else {
                 System.out.println("Phase 1");
                 request.setAttribute("error", "Invalid Username or Password");
@@ -73,6 +89,19 @@ public class LoginServlet extends HttpServlet {
                     );
                 }
 
+            }
+        }
+        return null;
+    }
+
+    private String checkUserAccount(Connection conn, String userId) throws SQLException {
+        String query = "SELECT account_type FROM accounts WHERE user_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("account_type");
+                }
             }
         }
         return null;

@@ -1,16 +1,19 @@
-<%--
+
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="com.bank.model.Account" %><%--
   Created by IntelliJ IDEA.
   User: maxsi
-  Date: 1/21/25
-  Time: 11:15 PM
+  Date: 1/24/25
+  Time: 02:51 PM
   To change this template use File | Settings | File Templates.
 --%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account Creation Form</title>
+  <title>Fixed Deposit Details</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -41,25 +44,16 @@
       text-align: start;
       margin-bottom: 5px;
     }
-    select, input[type="text"], input[type="number"] {
+    .view-field {
       width: 100%;
-      height: 20px;
-      margin: 15px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button[type="submit"] {
-      width: 100%;
-      height: 35px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button[type="submit"]:hover {
-      background-color: #0056b3;
+      padding: 8px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      color: #333;
+      text-align: center;
     }
     .error-message {
       color: red;
@@ -95,29 +89,41 @@
   </div>
   <%
     }
+    Account account = (Account) request.getAttribute("account");
+
+    // Extract account details if available
+    String accountNumber = (account != null) ? account.getAccountId() : "N/A";
+    BigDecimal balance = (account != null) ? account.getBalance() : BigDecimal.ZERO;
+
   %>
 
-  <form action="account" method="POST">
-    <h2 style="margin-bottom: 10px; text-align: center;"> Account Creation </h2>
+  <form action="fixDepoDetails" method="POST">
+    <h2 style="margin-bottom: 10px; text-align: center;"> Fixed Deposit Details </h2>
 
     <div class="form-group">
-      <label for="accountType">Account Type:</label>
-      <select id="accountType" name="accountType" required>
-        <option value="" disabled selected>Select Account Type</option>
-        //<option value="create">Create Account</option>
-        <option value="savings">Savings Account</option>
-        <option value="loan">Loans Account</option>
-        <option value="fixed">Fixed Account</option>
-      </select>
+      <label class="label" for="accountNumber">Account Number:</label><br>
+      <div class="view-field" id="accountNumber">
+      //  <%= accountNumber %> <!-- The account number will be set dynamically -->
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="initialDeposit">Initial Deposit:</label>
-      <input type="number" id="initialDeposit" name="initialDeposit" required placeholder="Enter Amount" step="0.0001"/>
+      <label class="label" for="date">Maturity Date:</label><br>
+      <div class="view-field" id="date">
+        //<%= balance %> <!-- The balance will be set dynamically -->
+      </div>
     </div>
 
-    <button type="submit">Create</button>
+    <div class="form-group">
+      <label class="label" for="interest">Interest Earned:</label><br>
+      <div class="view-field" id="interest">
+       // <%= balance %> <!-- The balance will be set dynamically -->
+      </div>
+    </div>
+
   </form>
 </div>
 </body>
 </html>
+
+

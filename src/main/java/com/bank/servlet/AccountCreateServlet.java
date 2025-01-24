@@ -1,50 +1,49 @@
-package com.bank;
+package com.bank.servlet;
 
+import com.bank.model.Account;
+import com.bank.util.DBUtilities;
+import com.bank.util.SessionUtilities;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
 public class AccountCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        System.out.println("test 1: "+session.getAttribute("user_id"));
-        Integer userId = (Integer) session.getAttribute("user_id");
-        System.out.println(userId);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/account.jsp");
+        dispatcher.forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Integer userId = SessionUtilities.getUserIdFromSession(request, response);
 
-        HttpSession session = request.getSession();
-        System.out.println("test 2: "+session.getAttribute("user_id"));
-        Integer userId = Integer.parseInt((String) session.getAttribute("user_id"));
-        System.out.println(userId);
-
-        if (userId == null) {
-            // Set an error message indicating session timeout
-            request.setAttribute("error", "Your session has timed out. Please log in again.");
-
-            // Redirect to login page
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
+//        HttpSession session = request.getSession();
+//        System.out.println("test 2: "+session.getAttribute("user_id"));
+//        Integer userId = Integer.parseInt((String) session.getAttribute("user_id"));
+//        System.out.println(userId);
+//
+//        if (userId == null) {
+//            // Set an error message indicating session timeout
+//            request.setAttribute("error", "Your session has timed out. Please log in again.");
+//
+//            // Redirect to login page
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+//            dispatcher.forward(request, response);
+//            return;
+//        }
 
         String accType = request.getParameter("accountType");
         String initialDepositStr = request.getParameter("initialDeposit");
@@ -76,8 +75,6 @@ public class AccountCreateServlet extends HttpServlet {
             Account account = new Account(accType, initialDeposit, userId);
             createAccountInDatabase(conn, account);
             switch (accType.toLowerCase()) {
-                case "create":
-                    response.sendRedirect("accountCreate");
                 case "savings":
                     response.sendRedirect("savAccount");
                     break;
