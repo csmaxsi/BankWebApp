@@ -33,9 +33,9 @@ USE bank_management;
 ```
 ## Installation Steps
 
-- 1.Clone the repository
-- 2.Configure database connection in DBUtilities.java
-3.Build project: mvn clean package
+- Clone the repository
+- Configure database connection in DBUtilities.java
+3. Build project: mvn clean package
 4.Deploy WAR file to Tomcat
 
 ## Configuration
