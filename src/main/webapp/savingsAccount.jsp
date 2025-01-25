@@ -72,7 +72,6 @@
 </head>
 <body>
 <div class="form-container">
-    <!-- Display error message if it exists -->
     <%
         String errorMessage = (String) request.getAttribute("error");
         if (errorMessage != null) {

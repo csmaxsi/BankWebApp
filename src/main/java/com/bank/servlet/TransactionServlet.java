@@ -83,7 +83,7 @@ public class TransactionServlet extends HttpServlet {
     }
 
     private int getAccountIdByUserId(Connection conn, int userId) throws SQLException {
-        String sql = "SELECT account_id FROM accounts WHERE user_id = ?";
+        String sql = "SELECT account_id FROM savingsAccounts WHERE user_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -99,7 +99,7 @@ public class TransactionServlet extends HttpServlet {
 
     private void processTransaction(Connection conn, Transaction transaction) throws SQLException {
         if(Objects.equals(transaction.getTransactionType(), "Withdraw")) {
-            String sql = "UPDATE accounts SET balance = balance - ? WHERE account_id = ? AND balance >= ?";
+            String sql = "UPDATE savingsAccounts SET balance = balance - ? WHERE account_id = ? AND balance >= ?";
                try (PreparedStatement ps = conn.prepareStatement(sql)) {
                    ps.setBigDecimal(1, transaction.getAmount());
                    ps.setInt(2, transaction.getAccountId());
@@ -111,7 +111,7 @@ public class TransactionServlet extends HttpServlet {
                }
 
         } else if (Objects.equals(transaction.getTransactionType(), "Deposit")) {
-            String sql2 = "UPDATE accounts SET balance = balance + ? WHERE account_id = ?";
+            String sql2 = "UPDATE savingsAccounts SET balance = balance + ? WHERE account_id = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql2)) {
                 ps.setBigDecimal(1, transaction.getAmount());
                 ps.setInt(2, transaction.getAccountId());

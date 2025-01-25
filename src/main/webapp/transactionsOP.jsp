@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxsi
-  Date: 1/23/25
-  Time: 12:27 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,8 +63,8 @@
             background-color: #ffe6e6;
         }
         .error-container {
-            text-align: center; /* Center the content */
-            margin-bottom: 20px; /* Space between error message and form */
+            text-align: center;
+            margin-bottom: 20px;
         }
         .success-message {
             color: black;
@@ -85,11 +79,11 @@
             background-color: #ffb700;
         }
         .form-container {
-            display: flex; /* Use flexbox for alignment */
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center items vertically */
-            align-items: center; /* Center items horizontally */
-            min-height: 100vh; /* Minimum height of 100% of the viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
     </style>
 </head>

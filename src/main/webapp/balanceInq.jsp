@@ -1,11 +1,5 @@
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="com.bank.model.Account" %><%--
-  Created by IntelliJ IDEA.
-  User: maxsi
-  Date: 1/24/25
-  Time: 11:51 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.bank.model.Account" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,8 +56,8 @@
       background-color: #ffe6e6;
     }
     .error-container {
-      text-align: center; /* Center the content */
-      margin-bottom: 20px; /* Space between error message and form */
+      text-align: center;
+      margin-bottom: 20px;
     }
     .form-container {
       display: flex; /* Use flexbox for alignment */
@@ -76,21 +70,19 @@
 </head>
 <body>
 <div class="form-container">
-  <%-- Display error message if it exists --%>
   <%
     String errorMessage = (String) request.getAttribute("error");
     if (errorMessage != null) {
   %>
   <div class="error-container">
     <div class="error-message">
-      <%= errorMessage %> <!-- Using scriptlet to display the error message -->
+      <%= errorMessage %>
     </div>
   </div>
   <%
     }
     Account account = (Account) request.getAttribute("account");
 
-    // Extract account details if available
     String accountNumber = (account != null) ? account.getAccountId() : "N/A";
     BigDecimal balance = (account != null) ? account.getBalance() : BigDecimal.ZERO;
 
@@ -102,14 +94,14 @@
     <div class="form-group">
       <label class="label" for="accountNumber">Account Number:</label><br>
       <div class="view-field" id="accountNumber">
-        <%= accountNumber %> <!-- The account number will be set dynamically -->
+        <%= accountNumber %>
       </div>
     </div>
 
     <div class="form-group">
       <label class="label" for="balance">Balance:</label><br>
       <div class="view-field" id="balance">
-        <%= balance %> <!-- The balance will be set dynamically -->
+        <%= balance %>
       </div>
     </div>
 

@@ -1,13 +1,7 @@
 
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="com.bank.model.Account" %>
-<%@ page import="java.time.LocalDate" %><%--
-  Created by IntelliJ IDEA.
-  User: maxsi
-  Date: 1/24/25
-  Time: 02:51 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.time.LocalDate" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,35 +58,33 @@
       background-color: #ffe6e6;
     }
     .error-container {
-      text-align: center; /* Center the content */
-      margin-bottom: 20px; /* Space between error message and form */
+      text-align: center;
+      margin-bottom: 20px;
     }
     .form-container {
-      display: flex; /* Use flexbox for alignment */
-      flex-direction: column; /* Stack items vertically */
-      justify-content: center; /* Center items vertically */
-      align-items: center; /* Center items horizontally */
-      min-height: 100vh; /* Minimum height of 100% of the viewport height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
   </style>
 </head>
 <body>
 <div class="form-container">
-  <%-- Display error message if it exists --%>
   <%
     String errorMessage = (String) request.getAttribute("error");
     if (errorMessage != null) {
   %>
   <div class="error-container">
     <div class="error-message">
-      <%= errorMessage %> <!-- Using scriptlet to display the error message -->
+      <%= errorMessage %>
     </div>
   </div>
   <%
     }
     Account account = (Account) request.getAttribute("account");
 
-    // Extract account details if available
     String accountNumber = (account != null) ? account.getAccountId() : "N/A";
     BigDecimal interestEarned = (account != null) ? account.getInterestRate() : BigDecimal.ZERO;
       assert account != null;
@@ -106,21 +98,21 @@
     <div class="form-group">
       <label class="label" for="accountNumber">Account Number:</label><br>
       <div class="view-field" id="accountNumber">
-      //  <%= accountNumber %> <!-- The account number will be set dynamically -->
+      //  <%= accountNumber %>
       </div>
     </div>
 
     <div class="form-group">
       <label class="label" for="date">Maturity Date:</label><br>
       <div class="view-field" id="date">
-        <%= maturityDate %> <!-- The balance will be set dynamically -->
+        <%= maturityDate %>
       </div>
     </div>
 
     <div class="form-group">
       <label class="label" for="interest">Interest Earned:</label><br>
       <div class="view-field" id="interest">
-        <%= interestEarned %> <!-- The balance will be set dynamically -->
+        <%= interestEarned %>
       </div>
     </div>
 

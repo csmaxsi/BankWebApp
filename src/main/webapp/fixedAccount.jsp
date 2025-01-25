@@ -1,17 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxsi
-  Date: 1/22/25
-  Time: 1:57 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: maxsi
-  Date: 1/22/25
-  Time: 1:45 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,8 +25,8 @@
         }
         .form-group {
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            align-items: flex-start; /* Align items to the start */
+            flex-direction: column;
+            align-items: flex-start;
         }
         label {
             margin-bottom: 5px;
@@ -47,7 +34,7 @@
         button {
             width: 100%;
             height: 35px;
-            margin: 10px 0; /* Spacing between buttons */
+            margin: 10px 0;
             background-color: #007bff;
             color: white;
             border: none;
@@ -65,28 +52,27 @@
             background-color: #ffe6e6;
         }
         .error-container {
-            text-align: center; /* Center the content */
-            margin-bottom: 20px; /* Space between error message and form */
+            text-align: center;
+            margin-bottom: 20px;
         }
         .form-container {
-            display: flex; /* Use flexbox for alignment */
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center items vertically */
-            align-items: center; /* Center items horizontally */
-            min-height: 100vh; /* Minimum height of 100% of the viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
     </style>
 </head>
 <body>
 <div class="form-container">
-    <!-- Display error message if it exists -->
     <%
         String errorMessage = (String) request.getAttribute("error");
         if (errorMessage != null) {
     %>
     <div class="error-container">
         <div class="error-message">
-            <%= errorMessage %> <!-- Using scriptlet to display the error message -->
+            <%= errorMessage %>
         </div>
     </div>
     <%
