@@ -30,32 +30,32 @@ A web-based finance management system built using Java, Servlets, JSP, and MySQL
 ```sql
 CREATE DATABASE bank_management;
 USE bank_management;
-
-Installation Steps
+```
+## Installation Steps
 
 1.Clone the repository
 2.Configure database connection in DBUtilities.java
 3.Build project: mvn clean package
 4.Deploy WAR file to Tomcat
 
-Configuration
+## Configuration
 
 1.Update database credentials in DBUtilities.java
 2.Modify pom.xml for dependency management
 
-Security Considerations
+## Security Considerations
 
 1.Implement password hashing
 2.Add input validation
 3.Use prepared statements
 
-Future Enhancements
+## Future Enhancements
 
 3.Add two-factor authentication
 4.Implement advanced security features
 5.Create more robust error handling
 
-Contributing
+## Contributing
 
 1.Fork the repository
 2.Create feature branch
