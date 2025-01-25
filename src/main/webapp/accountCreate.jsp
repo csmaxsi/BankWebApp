@@ -104,7 +104,7 @@
       <label for="accountType">Account Type:</label>
       <select id="accountType" name="accountType" required>
         <option value="" disabled selected>Select Account Type</option>
-        //<option value="create">Create Account</option>
+        <option value="create">Create Account</option>
         <option value="savings">Savings Account</option>
         <option value="loan">Loans Account</option>
         <option value="fixed">Fixed Account</option>

@@ -1,61 +1,58 @@
 package com.bank.servlet;
 
-import jakarta.servlet.RequestDispatcher;
+import com.bank.model.Account;
+import com.bank.util.SessionUtilities;
+import com.bank.util.DBUtilities;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class FixedDepoDetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("fixDepoDetails.jsp");
-        dispatcher.forward(request, response);
+        Integer userId = SessionUtilities.getUserIdFromSession(request, response);
+
+        try (Connection conn = DBUtilities.getConnection()) {
+            String query = "SELECT account_id, maturity_date, deposit_amount, interest_rate, start_date FROM fixedDepositAccount WHERE user_id = ?";
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String accountId = rs.getString("account_id");
+                        BigDecimal depositAmount = rs.getBigDecimal("deposit_amount");
+                        BigDecimal interestRate = rs.getBigDecimal("interest_rate");
+                        LocalDate maturityDate = rs.getDate("maturity_date").toLocalDate();
+                        LocalDate startDate = rs.getDate("start_date").toLocalDate();
+
+                        long totalMonths = ChronoUnit.MONTHS.between(startDate, maturityDate);
+                        double time = totalMonths / 12.0; // Convert months to years
+
+                        BigDecimal interestEarned = depositAmount.multiply(interestRate.divide(BigDecimal.valueOf(100))).multiply(BigDecimal.valueOf(time));
+
+                        Account account = new Account(accountId, maturityDate, interestEarned); // Total amount including interest
+                        request.setAttribute("account", account);
+                    } else {
+                        request.setAttribute("error", "No fixed deposit found for this user.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            request.setAttribute("error", "Error retrieving fixed deposit details.");
+        }
+        request.getRequestDispatcher("fixDepoDetails.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve the selected operation from the form
-        String operation = request.getParameter("operation");
 
-        // Check if the operation is valid
-        if (operation == null || operation.isEmpty()) {
-            // Set an error message if no operation is selected
-            request.setAttribute("error", "Please select a valid operation.");
-            request.getRequestDispatcher("fixDepoDetails").forward(request, response);
-            return;
-        }
-
-        switch (operation) {
-            case "transaction":
-                // Handle transaction operation logic here
-                // For example, you might call a service to process a transaction
-                // Redirect or forward to a success page or another servlet
-                response.sendRedirect("transaction");
-                System.out.println("Transaction Successfull");
-                break;
-
-            case "balanceInquiry":
-                // Handle balance inquiry logic here
-                // For example, you might call a service to get the account balance
-                response.sendRedirect("balanceInq");
-                break;
-
-            case "fixedBalance":
-                // Handle balance inquiry logic here
-                // For example, you might call a service to get the account balance
-                response.sendRedirect("fixDepoDetails");
-                break;
-
-            default:
-                // In case of an invalid operation
-                request.setAttribute("error", "Invalid operation selected.");
-                break;
-        }
     }
-
 }

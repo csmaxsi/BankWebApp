@@ -26,7 +26,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (username.isEmpty() || password.isEmpty()) {
-            //System.out.println("phase 0");
             request.setAttribute("error", "Please fill in all fields");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
@@ -55,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                     }
                 } else {
-                    response.sendRedirect("accountCreate.jsp");
+                    response.sendRedirect("createAccount");
                 }
             } else {
                 System.out.println("Phase 1");
@@ -64,7 +63,6 @@ public class LoginServlet extends HttpServlet {
             }
 
         } catch (SQLException e) {
-            //System.out.println("Phase 2");
             System.err.println("Login error: " + e.getMessage());
             request.setAttribute("error", "Login failed. Please try again later.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
@@ -73,14 +71,12 @@ public class LoginServlet extends HttpServlet {
 
     private User authenticateUser(Connection conn, String username, String password) throws SQLException {
         String checkQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
-        //System.out.println("phase -5");
         try (PreparedStatement ps = conn.prepareStatement(checkQuery)) {
             ps.setString(1, username);
             ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    // Create User object from database results
                     return new User(
                             rs.getString("user_id"),
                             rs.getString("username"),

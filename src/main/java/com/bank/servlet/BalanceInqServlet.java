@@ -2,7 +2,7 @@ package com.bank.servlet;
 
 import com.bank.model.Account;
 import com.bank.util.DBUtilities;
-import jakarta.servlet.RequestDispatcher;
+import com.bank.util.SessionUtilities;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,41 +19,33 @@ public class BalanceInqServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("balanceInq.jsp");
-        dispatcher.forward(request, response);
-    }
+        Integer userId = SessionUtilities.getUserIdFromSession(request, response);
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       int userId = Integer.parseInt(request.getParameter("userId"));
-       System.out.println("user id is:" + userId);
+        try (Connection conn = DBUtilities.getConnection()) {
+            String sql = "SELECT account_id, balance, interest_rate FROM savingsAccounts WHERE user_id = ?";
 
-        try(Connection conn = DBUtilities.getConnection()){
-            String sql = "SELECT account_id, balance FROM accounts WHERE user_id = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, userId);
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        // Account data found, set attributes to forward to JSP
                         String accountNumber = rs.getString("account_id");
                         BigDecimal balance = rs.getBigDecimal("balance");
+                        BigDecimal interestRate = rs.getBigDecimal("interest_rate");
 
-                        System.out.println("account no is :"+ accountNumber);
-                        Account account = new Account(accountNumber, balance);
+                        BigDecimal totalBalance = balance.add(balance.multiply(interestRate).divide(BigDecimal.valueOf(100)));
 
-                        // Set attributes to forward to JSP
+                        Account account = new Account(accountNumber, totalBalance);
+
                         request.setAttribute("account", account);
                     } else {
-                        // No account found for the user
-                        request.setAttribute("error", "No account found for the logged-in user.");
+                        request.setAttribute("error", "You do not have a savings account.");
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        // Forward to the balance_inquiry.jsp to display the data
         request.getRequestDispatcher("balanceInq.jsp").forward(request, response);
     }
 

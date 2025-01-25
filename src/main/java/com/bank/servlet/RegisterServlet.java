@@ -46,17 +46,14 @@ public class RegisterServlet extends HttpServlet {
         try (Connection conn = DBUtilities.getConnection()) {
             User user = new User(username, password, email);
             if(isUserExist(conn, user.getUsername(),user.getPassword())) {
-                //System.out.println("User exist");
                 request.setAttribute("error", "Username or Email is already taken");
                 request.getRequestDispatcher("/register").forward(request, response);
                 return;
             }
 
             if(saveUser(conn, user)) {
-                //System.out.println("save user");
                 response.sendRedirect("login.jsp");
             } else {
-                //System.out.println("save error");
                 request.setAttribute("error", "Registration Failed!");
                 request.getRequestDispatcher("/register").forward(request, response);
             }

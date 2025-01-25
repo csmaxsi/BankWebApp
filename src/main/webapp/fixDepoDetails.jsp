@@ -1,6 +1,7 @@
 
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="com.bank.model.Account" %><%--
+<%@ page import="com.bank.model.Account" %>
+<%@ page import="java.time.LocalDate" %><%--
   Created by IntelliJ IDEA.
   User: maxsi
   Date: 1/24/25
@@ -93,7 +94,9 @@
 
     // Extract account details if available
     String accountNumber = (account != null) ? account.getAccountId() : "N/A";
-    BigDecimal balance = (account != null) ? account.getBalance() : BigDecimal.ZERO;
+    BigDecimal interestEarned = (account != null) ? account.getInterestRate() : BigDecimal.ZERO;
+      assert account != null;
+      LocalDate maturityDate =  account.getMaturityDate() ;
 
   %>
 
@@ -110,14 +113,14 @@
     <div class="form-group">
       <label class="label" for="date">Maturity Date:</label><br>
       <div class="view-field" id="date">
-        //<%= balance %> <!-- The balance will be set dynamically -->
+        <%= maturityDate %> <!-- The balance will be set dynamically -->
       </div>
     </div>
 
     <div class="form-group">
       <label class="label" for="interest">Interest Earned:</label><br>
       <div class="view-field" id="interest">
-       // <%= balance %> <!-- The balance will be set dynamically -->
+        <%= interestEarned %> <!-- The balance will be set dynamically -->
       </div>
     </div>
 

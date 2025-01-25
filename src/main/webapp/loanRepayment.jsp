@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.bank.model.Account" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.time.LocalDate" %><%--
   Created by IntelliJ IDEA.
   User: maxsi
   Date: 1/24/25
@@ -95,14 +97,20 @@
   </div>
   <%
     }
+      Account account = (Account) request.getAttribute("account");
+
+      String accountNumber = (account != null) ? account.getAccountId() : "N/A";
   %>
 
   <form action="loanRepay" method="POST">
     <h2 style="margin-bottom: 10px; text-align: center;"> Loan Repayment </h2>
 
+
     <div class="form-group">
-      <label for="accountNumber">Account Number:</label>
-      <input type="text" id="accountNumber" name="accountNumber" required>
+      <label class="label" for="accountNumber">Account Number:</label><br>
+      <div class="view-field" id="accountNumber">
+        <%= accountNumber %> <!-- The balance will be set dynamically -->
+      </div>
     </div>
 
     <div class="form-group">

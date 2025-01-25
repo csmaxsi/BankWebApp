@@ -9,8 +9,6 @@ import com.bank.util.DBUtilities;
 import com.bank.model.Transaction;
 import com.bank.util.SessionUtilities;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,18 +22,15 @@ public class TransactionServlet extends HttpServlet {
         Integer userId = SessionUtilities.getUserIdFromSession(request, response);
 
         try (Connection conn = DBUtilities.getConnection()) {
-            // Retrieve accountId based on userId
             int accountId = getAccountIdByUserId(conn, userId);
-
-            // Pass accountId as a request attribute
+            System.out.println(accountId);
             request.setAttribute("accountId", accountId);
 
-            // Forward to JSP
             RequestDispatcher dispatcher = request.getRequestDispatcher("transactionsOP.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
             request.setAttribute("error", "Unable to retrieve account information.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("savingsAccount.jsp");
             dispatcher.forward(request, response);
         }
 
@@ -45,18 +40,15 @@ public class TransactionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         String accountNumber = request.getParameter("accountId");
         String transactionType = request.getParameter("transactionType");
         String amount = request.getParameter("amount");
 
         if (accountNumber.isEmpty() || transactionType.isEmpty() || amount.isEmpty()) {
-            //System.out.println("phase 0");
             request.setAttribute("error", "Please fill in all fields");
             request.getRequestDispatcher("/transaction").forward(request, response);
             return;
         }
-
 
         try {
             int accountId = Integer.parseInt(accountNumber);
@@ -75,8 +67,6 @@ public class TransactionServlet extends HttpServlet {
                 request.setAttribute("success", "Transaction Successfull");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("transactionsOP.jsp");
                 dispatcher.forward(request, response);
-                //response.sendRedirect("transaction");
-                //success
             } catch (SQLException e) {
                 System.err.println("Transaction Error: " + e.getMessage());
                 request.setAttribute("error", "Transaction failed. Please try again later.");
@@ -98,7 +88,7 @@ public class TransactionServlet extends HttpServlet {
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt("account_id"); // Return the first account_id
+                    return rs.getInt("account_id");
                 } else {
                     throw new SQLException("No account found for the given user ID.");
                 }
@@ -143,7 +133,6 @@ public class TransactionServlet extends HttpServlet {
                 ps.setString(2, transaction.getTransactionType());
                 ps.setBigDecimal(3, transaction.getAmount());
                 ps.setObject(4, transaction.getTimestamp());
-                //System.out.println("Saved Transaction !");
                 ps.executeUpdate();
 
             }

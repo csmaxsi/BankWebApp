@@ -18,12 +18,9 @@ public class SavingsAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve the selected operation from the form
         String operation = request.getParameter("operation");
 
-        // Check if the operation is valid
         if (operation == null || operation.isEmpty()) {
-            // Set an error message if no operation is selected
             request.setAttribute("error", "Please select a valid operation.");
             request.getRequestDispatcher("/savAccount").forward(request, response);
             return;

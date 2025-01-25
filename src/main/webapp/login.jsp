@@ -51,17 +51,7 @@
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
-        .register-link {
-            text-align: center;
-            margin-top: 5px;
-        }
-        .register-link a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .register-link a:hover {
-            color: #0056b3;
-        }
+
         .error-message {
 
             color: red;
