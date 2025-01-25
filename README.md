@@ -33,32 +33,33 @@ USE bank_management;
 ```
 ## Installation Steps
 
-- Clone the repository
-- Configure database connection in DBUtilities.java
+1 Clone the repository
+2 Configure database connection in DBUtilities.java
 3. Build project: mvn clean package
 4. Deploy WAR file to Tomcat
 
 ## Configuration
 
-1.Update database credentials in DBUtilities.java
-2.Modify pom.xml for dependency management
+1. Update database credentials in DBUtilities.java
+2. Modify pom.xml for dependency management
 
 ## Security Considerations
 
-1.Implement password hashing
-2.Add input validation
-3.Use prepared statements
+1. Implement password hashing
+2. Add input validation
+3. Use prepared statements
 
 ## Future Enhancements
 
-3.Add two-factor authentication
-4.Implement advanced security features
-5.Create more robust error handling
+1. Add two-factor authentication
+2. Implement advanced security features
+3. Create more robust error handling
+4. Improve OOP Structure
 
 ## Contributing
 
-1.Fork the repository
-2.Create feature branch
-3.Commit changes
-4.Push to branch
-5.Create pull request
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create pull request
