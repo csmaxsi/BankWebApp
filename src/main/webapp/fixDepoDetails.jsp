@@ -98,7 +98,7 @@
     <div class="form-group">
       <label class="label" for="accountNumber">Account Number:</label><br>
       <div class="view-field" id="accountNumber">
-      //  <%= accountNumber %>
+        <%= accountNumber %>
       </div>
     </div>
 

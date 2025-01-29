@@ -35,10 +35,9 @@ public class RegisterServlet extends HttpServlet {
 
         if(error != null) {
             //System.out.println("Phase 1 bug");
-            System.err.println("Validation Error: " + error); // Add this line
+            //System.err.println("Validation Error: " + error);
             request.setAttribute("error", error);
-            request.getRequestDispatcher("/register").forward(request, response);
-            System.out.println("Phase 2 bug");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
             return;
         }
 

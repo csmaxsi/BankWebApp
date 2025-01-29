@@ -68,6 +68,18 @@
       text-align: center;
       margin-bottom: 20px;
     }
+    .success-message {
+      color: black;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ffb700;
+      background-color: #ffb700;
+    }
+    .success-container {
+      text-align: center;
+      margin-bottom: 20px;
+      background-color: #ffb700;
+    }
     .form-container {
       display: flex;
       flex-direction: column;
@@ -81,6 +93,17 @@
 <div class="form-container">
 
   <%
+    String successMessage = (String) request.getAttribute("success");
+    if (successMessage != null) {
+  %>
+  <div class="success-container">
+    <div class="success-message">
+      <%= successMessage %>
+    </div>
+  </div>
+  <%
+    }
+
     String errorMessage = (String) request.getAttribute("error");
     if (errorMessage != null) {
   %>

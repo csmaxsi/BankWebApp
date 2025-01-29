@@ -8,7 +8,7 @@ public class Account {
     private  BigDecimal balance;
     private Integer user_id;
     private  String accountNumber;
-    private BigDecimal interestRate; // New field for interest rate
+    private BigDecimal interestRate;
     private LocalDate maturityDate;
 
     public Account(String accType, BigDecimal initialDeposit, Integer user_id,BigDecimal interestRate) {

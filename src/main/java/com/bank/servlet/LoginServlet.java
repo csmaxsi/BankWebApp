@@ -37,27 +37,19 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                session.setAttribute("user_id", user.getUserId()); // Store userId in session
+                session.setAttribute("user_id", user.getUserId());
                 session.setMaxInactiveInterval(30*60);
-                String accountType = checkUserAccount(conn, user.getUserId());
-                if (accountType != null) {
-                    // Redirect based on account type
-                    switch (accountType) {
-                        case "savings":
-                            response.sendRedirect("savAccount");
-                            break;
-                        case "loan":
-                            response.sendRedirect("loaAccount");
-                            break;
-                        case "fixed":
-                            response.sendRedirect("fixAccount");
-                            break;
-                    }
+
+                if(savingsUser(conn, user.getUserId())) {
+                    response.sendRedirect("savAccount");
+                } else if (loanUser(conn,user.getUserId())) {
+                    response.sendRedirect("loaAccount");
+                } else if (fixedUSer(conn, user.getUserId())) {
+                    response.sendRedirect("fixAccount");
                 } else {
                     response.sendRedirect("createAccount");
                 }
             } else {
-                System.out.println("Phase 1");
                 request.setAttribute("error", "Invalid Username or Password");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
@@ -90,16 +82,40 @@ public class LoginServlet extends HttpServlet {
         return null;
     }
 
-    private String checkUserAccount(Connection conn, String userId) throws SQLException {
-        String query = "SELECT account_type FROM accounts WHERE user_id = ?";
+    private boolean savingsUser(Connection conn, String userId) throws SQLException {
+        String query = "Select COUNT(*) FROM savingsAccounts WHERE user_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString("account_type");
+                    return rs.getInt(1) == 1;
                 }
             }
         }
-        return null;
+        return false;
+    }
+
+    private boolean loanUser(Connection conn, String userId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM loanAccount WHERE user_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)){
+            ps.setString(1, userId);
+            try(ResultSet rs = ps.executeQuery()){
+                if (rs.next()){
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } return false;
+    }
+
+    private boolean fixedUSer (Connection conn, String userId) throws SQLException {
+        String query = " SELECT COUNT(*) FROM fixedDepositAccount WHERE user_id = ?";
+        try( PreparedStatement ps = conn.prepareStatement(query)){
+            ps.setString(1, userId);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    return rs.getInt(1)>0;
+                }
+            }
+        }return false;
     }
 }

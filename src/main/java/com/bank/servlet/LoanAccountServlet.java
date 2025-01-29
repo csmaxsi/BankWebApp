@@ -25,23 +25,10 @@ public class LoanAccountServlet extends HttpServlet {
             return;
         }
 
-        switch (operation) {
-            case "transaction":
-                response.sendRedirect("transaction");
-                System.out.println("Transaction Successfull");
-                break;
-
-            case "balanceInquiry":
-                response.sendRedirect("balanceInq");
-                break;
-
-            case "loanRepay":
-                response.sendRedirect("loanRepay");
-                break;
-
-            default:
-                request.setAttribute("error", "Invalid operation selected.");
-                break;
+        if( operation.equals("loanRepay")){
+            response.sendRedirect("loanRepay");
+        }else{
+            request.setAttribute("error", "Select an operation.");
         }
     }
 }

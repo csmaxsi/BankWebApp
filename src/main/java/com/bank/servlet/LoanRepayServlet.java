@@ -94,7 +94,7 @@ public class LoanRepayServlet extends HttpServlet {
                 return;
             }
 
-            String updateQuery = "UPDATE loans SET remaining_balance = remaining_balance - ? WHERE account_id = ?";
+            String updateQuery = "UPDATE loanAccount SET remaining_balance = remaining_balance - ? WHERE account_id = ?";
             try (PreparedStatement ps = conn.prepareStatement(updateQuery)) {
                 ps.setBigDecimal(1, repaymentAmount);
                 ps.setString(2, accountId);

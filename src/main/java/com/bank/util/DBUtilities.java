@@ -9,7 +9,6 @@ public class DBUtilities {
     private static final String USER = "programmer";
     private static final String PASSWORD = "CSmaxsi@96$";
 
-    // Static block to load the MySQL driver
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,13 +18,10 @@ public class DBUtilities {
         }
     }
 
-    // Method to get a connection to the database
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    // Private constructor to prevent instantiation
     private DBUtilities() {
-        // Utility class should not be instantiated
     }
 }

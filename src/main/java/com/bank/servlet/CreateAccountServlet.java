@@ -74,7 +74,7 @@ public class CreateAccountServlet extends HttpServlet {
             pstmt.setBigDecimal(3, interestRate);
             pstmt.executeUpdate();
 
-            System.out.println("Savings Account created for User ID: " + userId);
+            //System.out.println("Savings Account created for User ID: " + userId);
         }
     }
 
@@ -90,12 +90,12 @@ public class CreateAccountServlet extends HttpServlet {
             pstmt.setBigDecimal(4, interestRate);
             pstmt.executeUpdate();
 
-            System.out.println("Fixed Deposit created for User ID: " + userId);
+            //System.out.println("Fixed Deposit created for User ID: " + userId);
         }
     }
 
     private void saveLoan(Integer userId, BigDecimal loanAmount, int termMonths, BigDecimal interestRate) throws SQLException {
-        String sql = "INSERT INTO loanAccount (user_id, loan_amount, remaining_balance, interest_rate,  loan_term ) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO loanAccount (user_id, loan_amount, remaining_balance, interest_rate,  loan_term , start_date) VALUES (?, ?, ?, ?, ?, CURDATE())";
 
         try (Connection conn = DBUtilities.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -107,7 +107,7 @@ public class CreateAccountServlet extends HttpServlet {
             pstmt.setInt(5, termMonths);
             pstmt.executeUpdate();
 
-            System.out.println("Loan created for User ID: " + userId);
+            //System.out.println("Loan created for User ID: " + userId);
         }
     }
 

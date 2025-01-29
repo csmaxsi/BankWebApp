@@ -85,10 +85,6 @@
         <div class="form-group">
             <label>Select an operation:</label>
 
-            <button type="submit" name="operation" value="transaction">Transaction Operations</button>
-
-            <button type="submit" name="operation" value="balanceInquiry">Balance Inquiry</button>
-
             <button type="submit" name="operation" value="loanRepay">Loan Repayment</button>
 
         </div>
